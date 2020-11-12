@@ -1,0 +1,15 @@
+ @media only screen and (max-width: 1000px) {
+     #shrs_MAP64648_pagingDsp ul.shrs_MAP64648_pagingList li  {
+     display: inline !important;
+        }
+    }
+        @media only screen and (max-width: 1000px) {
+     ul.shrs_MAP64648_productDspList li.MAP64648_pImage  {
+     display: inline !important;
+        }
+    } 
+       @media only screen and (max-width: 1000px) {
+     ul.shrs_MAP64648_productDspList li.MAP64648_pMerchantName  {
+     display: inline !important;
+        }
+    }   

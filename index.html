@@ -1,0 +1,283 @@
+  
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Project Highlight</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet-src.js" crossorigin=""></script>
+	  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@2.5.1/dist/esri-leaflet.js"
+    integrity="sha512-q7X96AASUF0hol5Ih7AeZpRF6smJS55lcvy+GLWzJfZN+31/BQ8cgNx2FGF+IQSA4z2jHwB20vml+drmooqzzQ=="
+    crossorigin=""></script>
+
+  <!-- Load Leaflet MarkerCluster and Esri Leaflet Cluster from CDN -->
+  <link rel="stylesheet" type="text/css"
+    href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css"
+    integrity="sha512-BBToHPBStgMiw0lD4AtkRIZmdndhB6aQbXpX7omcrXeG2PauGBl2lzq2xUZTxaLxYz5IDHlmneCZ1IJ+P3kYtQ=="
+    crossorigin="">
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css"
+    integrity="sha512-RLEjtaFGdC4iQMJDbMzim/dOvAu+8Qp9sw7QE4wIMYcg2goVoivzwgSZq9CsIxp4xKAZPKh5J2f2lOko2Ze6FQ=="
+    crossorigin="">
+  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"
+    integrity="sha512-MQlyPV+ol2lp4KodaU/Xmrn+txc1TP15pOBF/2Sfre7MRsA/pB4Vy58bEqe9u7a7DczMLtU5wT8n7OblJepKbg=="
+    crossorigin=""></script>
+  <script src="https://unpkg.com/esri-leaflet-cluster@2.1.0/dist/esri-leaflet-cluster.js"
+    integrity="sha512-fEdNFHisleVtEYdLhW4Z2RsR7TN6hLutE/+O4D+skfTNY2rlHm8HOZARPWkdrFFy/+i2KjFxcZAKTUWaVfbV0g=="
+    crossorigin=""></script>
+	<!-- Load Esri Geocoder from CDN -->
+<link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
+    crossorigin="">
+  <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
+    crossorigin=""></script>
+	<!--Bouncing Marker Plugin-->
+	<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/gh/hosuaby/Leaflet.SmoothMarkerBouncing@v2.0.0/dist/bundle.js"
+        crossorigin="anonymous"></script>
+	<!--Streetlabel Plugin-->
+	<script src="leaflet.textpath.js"></script>
+	<!--Load jquery from cdn-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!--Load moving marker animation -->
+	<script type="text/javascript" src="MovingMarker.js"></script>
+	<!--Load easy button files -->
+	<!-- Load easy button library from CDN -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+	<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+	<script src="https://kit.fontawesome.com/829ec01bd3.js" crossorigin="anonymous"></script>
+    <style>
+    body { margin:0; padding:0; }
+    #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+	
+	.leaflet-marker-shadow {
+		display: none;
+		}
+	.speciallink {
+  background-color: dodgerblue;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+div.leaflet-bar.easy-button-container.leaflet-control{
+    position: relative;
+    bottom: -47em;
+	z-index: 1001;
+	}
+	
+	div.leaflet-bottom.leaflet-left {
+    		background-color: black;
+		opacity: .8;
+	    	z-index: 999;
+		left: .5em;
+		position: absolute;
+		width: 9.5%;
+		bottom: 2em;
+	    	top: 53.65em;
+		border: 1px solid white;
+		height: 4%;
+		border-radius: 4px;
+	    }
+	a {
+		text-decoration: none;
+		color: black !important;
+		}
+		.leaflet-popup-content {
+			text-align: center;
+			}
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+  var map = L.map('map').setView([34.420158, -118.608613], 16);
+  
+  
+
+  //L.esri.imageMapLayer({
+		//url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+	//}).addTo(map);
+	L.esri.basemapLayer('Imagery').addTo(map);
+	L.esri.basemapLayer('ImageryLabels').addTo(map);
+	
+  
+   map.createPane('addresses');
+
+  // for point GeoJSON, Leafet expects custom panes to be returned in pointToLayer()
+  var addresses= L.esri.featureLayer({
+    url: 'https://services9.arcgis.com/ZP6Sg2L0zjLDGQa9/arcgis/rest/services/tr_61105_addresses/FeatureServer/0',
+    pointToLayer: function (geojson, latlng) {
+      return L.marker(latlng, {
+        pane: 'addresses'
+      }).bounce().setBouncingOptions({
+        bounceHeight : 100});
+    }
+  }).addTo(map);
+  
+  
+ L.esri.featureLayer({
+		url: 'https://services9.arcgis.com/ZP6Sg2L0zjLDGQa9/arcgis/rest/services/tr_61105_streets/FeatureServer/0',
+		onEachFeature: function (feature, layer) {
+            layer.setText(feature.properties.FullName, { center: true, attributes: { fill: 'black', 'font-weight': '900', 'font-size': '.8em' } }
+			
+			);
+        },
+		opacity: 0.7,
+		color: '#8ebcf8'
+  }).addTo(map);
+  
+  //const marker = L.marker([34.424879, -118.603474]).addTo(map).bounce();
+
+  var overLay = L.imageOverlay('tr_61105_02_stripped.png', [[34.425818129, -118.609845838], [34.422993955, -118.606346893]], {
+			opacity: 0.6
+		});
+		
+		
+		
+		
+		var startbutton = L.easyButton ( 'fas fa-play-circle fa-lg', function(){
+		map.setView([34.42002275, -118.611607765], 15).addLayer(sphere).addLayer(popup1).open;
+	}).addTo(map);
+	
+	var info = L.control({position:'bottomleft'});
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+    this._div.innerHTML = "<span style='font-size:15px;font-weight: 800; color: white;text-shadow: .5px 1px black;position: relative;top: .65em;left: 1.97em;'>&nbsp;Start Narration</span>";
+};
+
+info.addTo(map);
+
+ var popup1 = L.popup({
+    	autoClose:true,
+	 closeOnClick:true
+      })
+    .setLatLng(L.latLng(34.42002275, -118.611607765))
+    .setContent($(' <a href="#" style="text-align: center;">This is the construction sphere. The address points to the south are utilities for future street lighting. The clustered points to the north are new residences.</br><span style="color:red;text-decoration: underline; font-weight: 900;">Continue</span></a>').click(function() {
+   map.setView([34.417879, -118.608077], 19).removeLayer(popup1).addLayer(popup2).removeLayer(sphere);
+})[0]);
+
+
+var popup2 = L.popup({
+    	autoClose:true,
+	 closeOnClick:true
+      })
+    .setLatLng(L.latLng(34.417879, -118.608077))
+    .setContent($(' <a href="#" style="text-align: center;">This is phase 13 of this tract in which we assigned 72 new addresses. Addressing in vacant areas requires creating the street blocking first.</br><span style="color:red;text-decoration: underline; font-weight: 900;">Continue</span></a>').click(function() {
+   map.setView([34.424267, -118.608004], 19).removeLayer(popup2).addLayer(popup3);
+})[0]);
+
+var popup3 = L.popup({
+    	autoClose:true,
+	 closeOnClick:true
+      })
+    .setLatLng(L.latLng(34.424267, -118.608004))
+    .setContent($(' <a href="#" style="text-align: center;">This is the second phase of this tract in which we addressed 70 new homes. We will remove the addresses to demo how they get assigned.</br><span style="color:red;text-decoration: underline; font-weight: 900;">Continue</span></a>').click(function() {
+   map.setView([34.424267, -118.608004], 19).removeLayer(addresses).removeLayer(popup3).addLayer(popup4);
+})[0]);
+
+var havensidewy = [[34.424448, -118.607060], [34.424165, -118.607403], [34.423811, -118.607822],[34.423532, -118.608450]];
+
+var marker6 = L.Marker.movingMarker(havensidewy, [10000, 10000, 10000, 10000]);
+L.polyline(havensidewy);
+marker6.once('click', function () {
+    marker6.start();
+    marker6.closePopup();
+    marker6.unbindPopup();
+    marker6.on('click', function() {
+        if (marker1.isRunning()) {
+            marker6.pause();
+        } else {
+            marker6.start();
+        }
+    });
+    setTimeout(function() {
+        marker6.bindPopup('Blocks are usually 600-700 feet in Antelope and Santa Clarita Valley and 1000 feet long in the south. This street is only about 700 feet and so it only spans one block.').openPopup();
+    }, 1000);
+});
+
+
+var popup4 = L.popup({
+    	autoClose:true,
+	 closeOnClick:true
+      })
+    .setLatLng(L.latLng(34.424267, -118.608004))
+    .setContent($(' <a href="#" style="text-align: center;">The Unified House Numbering Map Grid provides us address block numbers every 8,000-10,000 feet in the county for both east/west and north/south running streets based on township section range boundaries.</br><span style="color:red;text-decoration: underline; font-weight: 900;">Continue</span></a>').click(function() {
+   map.setView([34.424448, -118.607060], 19).removeLayer(addresses).removeLayer(popup4);
+   marker6.addTo(map);
+   marker6.bindPopup('We determined this street starts at the 27000 block based on the Unified House Numbering Map. This is the starting point for this street. Every hundredth number is a new block.</br><b>Click the pin to continue.</b>').openPopup();
+})[0]);
+
+marker6.on('end', function() {
+    marker6.bindPopup($(' <a href="#" style="text-align: center;">We leave a space for a new address number every 20 feet. (ex. 2 to 4 for evens 1 to 3 for odds) We jump to the next number if there are gaps of land between houses or the houses span beyond 20 feet.</br><span style="color:red;text-decoration: underline; font-weight: 900;">Continue</span></a>').click(function() {
+   map.setView([34.424267, -118.608004], 19).removeLayer(marker6);
+   marker7.addTo(map);
+   marker7.bindPopup('This is the start of Knoll View Place which starts at block 27700. It runs south to north rather than east to west like the other street.</br><b>Click the pin to continue.</b>').openPopup();
+})[0]);
+});
+
+
+
+var knollviewpl = [[34.424001, -118.607682], [34.424497, -118.608272]];
+var marker7 = L.Marker.movingMarker(knollviewpl, [10000, 10000]);
+L.polyline(knollviewpl);
+marker7.once('click', function () {
+    marker7.start();
+    marker7.closePopup();
+    marker7.unbindPopup();
+    marker7.on('click', function() {
+        if (marker1.isRunning()) {
+            marker7.pause();
+        } else {
+            marker7.start();
+        }
+    });
+   // setTimeout(function() {
+   //     marker7.bindPopup('Blocks are usually 600-700 feet in Antelope and Santa Clarita Valley and 1000 feet long in the south. This street is only about 700 feet and so it only spans one block.').openPopup();
+  //  }, 0);
+});
+
+
+var popup5 = L.popup({
+    	autoClose:true,
+	 closeOnClick:true
+      })
+    .setLatLng(L.latLng(34.424267, -118.608004))
+    .setContent($(' <a href="#" style="text-align: center;">This concludes the demo. Please visit</br><span style="color:red;text-decoration: underline; font-weight: 900;text-align: center;"> https://valencia.com/</span></br>for more info</a>').click(function() {
+	window.open("https://valencia.com/");
+})[0]);
+
+marker7.on('end', function() {
+    marker7.bindPopup($(' <a href="#" style="text-align: center;">This street increases as you go north. Both streets have about 4 number spaces between addresses. Click here to see the siteplan with the resulting addresses.</br><span style="color:red;text-decoration: underline; font-weight: 900;">Continue</span></a>').click(function() {
+   map.setView([34.424267, -118.608004], 19).removeLayer(marker7).addLayer(overLay).addLayer(popup5);
+})[0]).openPopup();
+});
+
+
+var sphere = L.circle([34.42002275, -118.611607765], {radius: 1500, color: "purple"});
+
+//streets.on('load', function() {
+  //streets.eachFeature(function(layer) {
+    // layer.setText(feature.properties.FullName);
+  //});
+//}).addTo(map);
+  
+</script>
+
+</body>
+</html>
+</html>

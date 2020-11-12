@@ -1,0 +1,1 @@
+[google.maps.ControlPosition.LEFT_BOTTOM].push(controlDiv); 
