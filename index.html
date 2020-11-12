@@ -219,7 +219,7 @@ var popup4 = L.popup({
     .setContent($(' <a href="#" style="text-align: center;">The Unified House Numbering Map Grid provides us address block numbers every 8,000-10,000 feet in the county for both east/west and north/south running streets based on township section range boundaries.</br><span style="color:red;text-decoration: underline; font-weight: 900;">Continue</span></a>').click(function() {
    map.setView([34.424448, -118.607060], 19).removeLayer(addresses).removeLayer(popup4);
    marker6.addTo(map);
-   marker6.bindPopup('We determined this street starts at the 27000 block based on the Unified House Numbering Map. This is the starting point for this street. Every hundredth number is a new block.</br><b>Click the pin to continue.</b>').openPopup();
+   marker6.bindPopup('We determined this street will start at the 27000 block based on the Unified House Numbering Map. This is the start of the block for this street. Every hundredth number is a new block.</br><b>Click the pin to continue.</b>').openPopup();
 })[0]);
 
 marker6.on('end', function() {
