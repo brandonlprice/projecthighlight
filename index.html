@@ -223,7 +223,7 @@ var popup4 = L.popup({
 })[0]);
 
 marker6.on('end', function() {
-    marker6.bindPopup($(' <a href="#" style="text-align: center;">We leave a space for a new address number every 20 feet. (ex. 2 to 4 for evens 1 to 3 for odds) We jump to the next number if there are gaps of land between houses or the houses span beyond 20 feet.</br><span style="color:red;text-decoration: underline; font-weight: 900;">Continue</span></a>').click(function() {
+    marker6.bindPopup($(' <a href="#" style="text-align: center;">We leave a space for a new address number every 20 feet. We jump to the next number if there are gaps of land between houses or the houses span beyond 20 feet.</br><span style="color:red;text-decoration: underline; font-weight: 900;">Continue</span></a>').click(function() {
    map.setView([34.424267, -118.608004], 19).removeLayer(marker6);
    marker7.addTo(map);
    marker7.bindPopup('This is the start of Knoll View Place which starts at block 27700. It runs south to north rather than east to west like the other street so it has a different block number.</br><b>Click the pin to continue.</b>').openPopup();
