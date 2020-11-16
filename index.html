@@ -140,7 +140,7 @@ div.leaflet-bar.easy-button-container.leaflet-control{
 			opacity: 0.6
 		});
 		
-		
+  var sphere = L.circle([34.42002275, -118.611607765], {radius: 1500, color: "purple"});		
 		
 		
 		var startbutton = L.easyButton ( 'fas fa-play-circle fa-lg', function(){
@@ -259,16 +259,17 @@ var popup5 = L.popup({
     .setLatLng(L.latLng(34.424267, -118.608004))
     .setContent($(' <a href="#" style="text-align: center;">Now the developers can use the addresses we assigned to market and sell homes within the subdivision. Check out how that looks from the developers side: </br><span style="color:red;text-decoration: underline; font-weight: 900;text-align: center;"> https://valencia.com/</span></a>').click(function() {
 	window.open("https://valencia.com/");
+	 map.removeLayer(popup5);
 })[0]);
 
 marker7.on('end', function() {
-    marker7.bindPopup($(' <a href="#" style="text-align: center;">This house numbers on this street increase as you go north. Both streets have about 4 number spaces between houses. Click here to see the siteplan with the resulting addresses.</br><span style="color:red;text-decoration: underline; font-weight: 900;">Continue</span></a>').click(function() {
+    marker7.bindPopup($(' <a href="#" style="text-align: center;">The house numbers on this street increase as you go north instead of west like the other street. Both streets have about 4 number spaces between houses. Click here to see the siteplan with the resulting addresses.</br><span style="color:red;text-decoration: underline; font-weight: 900;">Continue</span></a>').click(function() {
    map.setView([34.424267, -118.608004], 18).removeLayer(marker7).addLayer(overLay).addLayer(popup5);
 })[0]).openPopup();
 });
 
 
-var sphere = L.circle([34.42002275, -118.611607765], {radius: 1500, color: "purple"});
+
 
 //streets.on('load', function() {
   //streets.eachFeature(function(layer) {
