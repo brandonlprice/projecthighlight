@@ -178,7 +178,7 @@ var popup2 = L.popup({
       })
     .setLatLng(L.latLng(34.417879, -118.608077))
     .setContent($(' <a href="#" style="text-align: center;">This is phase 13 of this tract in which we assigned 72 new house addresses. Addressing in vacant areas requires creating the street blocking first.</br><span style="color:red;text-decoration: underline; font-weight: 900;">Continue</span></a>').click(function() {
-   map.setView([34.424267, -118.608004], 19).removeLayer(popup2).addLayer(popup3);
+   map.flyTo([34.424267, -118.608004], 19).removeLayer(popup2).addLayer(popup3);
 })[0]);
 
 var popup3 = L.popup({
